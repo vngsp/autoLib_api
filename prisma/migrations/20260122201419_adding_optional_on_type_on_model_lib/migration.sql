@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Lib" ALTER COLUMN "type" DROP NOT NULL;

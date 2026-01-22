@@ -7,8 +7,18 @@ datasource db {
   provider = "postgresql"
 }
 
-model Lib {
+model PackageManager {
   id Int @id @default(autoincrement())
-  command String
-  type String
+  name String
+  install String
+  libs Lib[]
+}
+model Lib {
+  id        Int     @id @default(autoincrement())
+  name      String
+  category  String   
+  install   String   
+  dev       String?  
+  packageManagerId Int
+  packageManager PackageManager @relation(fields: [packageManagerId], references: [id])
 }
