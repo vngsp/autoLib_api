@@ -1,25 +1,6 @@
 import { Prisma } from "../../generated/prisma/client";
 import { prisma } from "../lib/prisma";
 
-export const createPackageManager = async (data: Prisma.PackageManagerCreateInput) => {
-    if(!data.name || !data.install) {
-        throw new Error("Some data is missing");
-    }
-
-    try {
-        const packageManager = await prisma.packageManager.create({
-            data: {
-                name: data.name,
-                install: data.install
-            }
-        })
-
-        return packageManager;
-    }catch (err: any) {
-        console.log('Some error ocurred on service', err);
-    }
-}
-
 export const createLibData = async (data: Prisma.LibCreateInput) => {
     if(!data.name || !data.category || !data.install) {
         throw new Error('Some data is missing');
@@ -60,6 +41,41 @@ export const deleteLib = async (id: number) => {
     return await prisma.lib.delete({
         where: {
             id,
+        }
+    })
+}
+
+export const deleteManyLibs = async (id: number) => {
+    return await prisma.lib.deleteMany({
+        where: {
+            packageManagerId:id
+        }
+    })
+}
+
+export const updateLib = async (id: number, data: Prisma.LibUpdateInput,) => {
+    try {
+        const libName = await prisma.lib.update({
+            where: {
+                id,
+            },
+            data,
+        })
+        return libName;
+    }catch (err: any) {
+        console.log('Some error ocurred on service', err);
+        throw err;
+    }
+}
+
+export const readLib = async () => {
+    return await prisma.lib.findMany({});
+}
+
+export const readLibByPack = async (packageManagerId: number) => {
+    return await prisma.lib.findMany({
+        where: {
+            packageManagerId,
         }
     })
 }

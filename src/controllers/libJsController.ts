@@ -1,18 +1,7 @@
 import { RequestHandler } from "express";
-import { createLibData, createManyLibsData, createPackageManager, deleteLib } from "../services/libJsService";
+import { createLibData, createManyLibsData, deleteLib, deleteManyLibs, readLib, readLibByPack, updateLib } from "../services/libJsService";
 
-export const createPackageManagerController: RequestHandler = async (req, res) => {
-    try {
-        const { name, install } = req.body;
-        const newPackageManager = await createPackageManager({ name, install });
-
-        res.status(201).json(newPackageManager);
-    }catch(err: any) {
-        res.status(400).json({ error: err.message });
-    }
-}
-
-export const libController: RequestHandler = async (req, res) => {
+export const createLibController: RequestHandler = async (req, res) => {
     try {
         const { name, category, install, packageManager } = req.body;
         const newLib = await createLibData({ name, category, install, packageManager });
@@ -23,7 +12,7 @@ export const libController: RequestHandler = async (req, res) => {
     }
 }
 
-export const libsCreateController: RequestHandler = async (req, res) => {
+export const createLibsController: RequestHandler = async (req, res) => {
     try {
         const data = req.body;
 
@@ -42,10 +31,58 @@ export const libsCreateController: RequestHandler = async (req, res) => {
 export const deleteLibController: RequestHandler = async (req, res) => {
     try {
         const id  = Number(req.params.id);
-        const deletedUser = await deleteLib(id);
+        const deletedLib = await deleteLib(id);
 
-        res.status(201).json(deletedUser);
+        res.status(200).json(deletedLib);
     } catch (err: any) {
         res.status(400).json({ err: err.message })
+    }
+}
+
+export const deleteManyLibController: RequestHandler = async (req, res) => {
+    try {
+        const id = Number(req.params.id);
+        const deletedLibs = await deleteManyLibs(id);
+
+        res.status(200).json(deletedLibs);
+    } catch(err: any) {
+        res.status(400).json({ err: err.message });
+    }
+}
+
+export const updateLibController: RequestHandler = async (req, res) => {
+    try {
+        const id = Number(req.params.id);
+
+        if (!id) {
+            return res.status(400).json({ error: 'Invalid id' });
+        }
+
+        const updatedLib = await updateLib(id, req.body);
+
+        return res.status(200).json(updatedLib);
+    }catch (err: any) {
+        res.status(400).json({ err: err.message });
+    }
+}
+
+export const readLibController: RequestHandler = async (req, res) => {
+    try {
+        const allLibs = await readLib();
+        
+        res.status(200).json(allLibs);
+    } catch(err: any) {
+        res.status(400).json({ error: err.message });
+    }
+}
+
+export const readLibByPackController: RequestHandler = async (req, res) => {
+    try {
+        const packageManagerId = Number(req.params.packageManagerId); 
+        const allLibsByPackage = await readLibByPack(packageManagerId);
+
+        res.status(200).json(allLibsByPackage);
+    } catch(err: any) {
+        res.status(400).json({ error: err.message });
     }
 }
