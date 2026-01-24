@@ -12,7 +12,7 @@ const options: swaggerJsdoc.Options = {
     },
     servers: [
       {
-        url: "https://seu-app.onrender.com",
+        url: "https://autolib-api.onrender.com",
         description: 'API server',
       },
     ],
