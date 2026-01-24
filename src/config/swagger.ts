@@ -12,7 +12,7 @@ const options: swaggerJsdoc.Options = {
     },
     servers: [
       {
-        url: process.env.API_URL,
+        url: "https://seu-app.onrender.com",
         description: 'API server',
       },
     ],
