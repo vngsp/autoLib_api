@@ -12,5 +12,5 @@ server.use('/', mainRouter);
 setupSwagger(server);
 
 server.listen(1000, () => {
-    console.log('Server on at http://localhost:1000');
+    console.log('API documentation on https://autolib-api.onrender.com/docs/');
 })
