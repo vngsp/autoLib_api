@@ -11,7 +11,7 @@ server.use(helmet());
 server.use('/', mainRouter);
 server.use(cors({
     origin: [
-        'http://localhost:3000',
+        'http://localhost:3000/auto-lib',
     ],
     methods: ['GET']
 }))
