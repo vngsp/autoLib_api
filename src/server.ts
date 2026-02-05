@@ -8,7 +8,7 @@ const server = express();
 server.use(cors({
     origin: [
         'http://localhost:3000',
-        'https://autolib-ojyj.vercel.app/?_vercel_share=LWzQFQanvIszuAqX5Q0R2KCgRVWdsPzy'
+        'https://autolib-ojyj.vercel.app'
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
